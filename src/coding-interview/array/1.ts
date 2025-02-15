@@ -11,6 +11,10 @@ console.log(1, solution_1([2, 1, 1, 3, 2, 5, 4]));
 console.log(1, solution_1([1, 6, 7]));
 
 // 2. 배열 제어하기
+const solution_2: Solution = (arr) => [...new Set(arr)].sort((a, b) => b - a);
+
+console.log(2, solution_2([4, 2, 2, 1, 3, 4])); 
+console.log(2, solution_2([2, 1, 1, 3, 2, 5, 4])); 
 
 // 3. 두 수를 뽑아서 더하기
 
