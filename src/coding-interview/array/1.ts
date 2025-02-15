@@ -116,3 +116,42 @@ console.log(6, solution_6(5, [2, 1, 2, 6, 2, 4, 3, 3]));
 console.log(6, solution_6(4, [4, 4, 4, 4, 4]));
 
 // 7. 방문 길이
+const solution_7 = (dirs) => {
+  const DIRECTIONS = {
+    U: [0, 1],
+    D: [0, -1],
+    R: [1, 0],
+    L: [-1, 0]
+  };
+
+  const isValid = ([x, y]) => x >= -5 && x <= 5 && y >= -5 && y <= 5;
+
+  const encodeEdge = (from, to) => {
+    const [x1, y1] = from;
+    const [x2, y2] = to;
+
+    return (x1 < x2 || (x1 === x2 && y1 < y2)) ? `${x1},${y1}-${x2},${y2}` : `${x2},${y2}-${x1},${y1}`;
+  };
+
+  const initialState = { pos: [0, 0], visited: new Set() };
+
+  const finalState = [...dirs].reduce((state, command) => {
+    const [dx, dy] = DIRECTIONS[command];
+    const [x, y] = state.pos;
+    const nextPos = [x + dx, y + dy];
+
+    if (!isValid(nextPos)) return state;
+
+    const edge = encodeEdge(state.pos, nextPos);
+    const newVisited = new Set(state.visited);
+    newVisited.add(edge);
+
+    return { pos: nextPos, visited: newVisited };
+  }, initialState);
+
+  return finalState.visited.size;
+};
+// 사실 encodeEdge 사용하지 않고, 배열 만들어서 0으로 초기화 하지 않고 undefined 인 경우 방문 했을 때만 초기화 해주면 메모리는 똑같긴 한데.. 귀찮음.
+
+console.log(solution_7('ULURRDLLU')); 
+console.log(solution_7('LULLLLLLU')); 
