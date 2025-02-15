@@ -85,5 +85,34 @@ console.log(5, solution_5([[1, 4], [3, 2], [4, 1]], [[3, 3], [3, 3]]));
 console.log(5, solution_5([[2, 3, 2], [4, 2, 4], [3, 1, 4]], [[5, 4, 3], [2, 4, 1], [3, 1, 1]]));
 
 // 6. 실패율
+const solution_6 = (N, stages) => {
+  const challenger = Array.from({ length: N + 2 }, (_, idx) =>
+    stages.filter(stage => stage === idx).length
+  );
+  const initialTotal = stages.length;
+
+  const stagesRates = [...Array(N).keys()]        
+    .map(i => i + 1)                               
+    .reduce(({ result, total }, stage) => {
+      const rate = total > 0 ? challenger[stage] / total : 0;
+      return {
+        total: total - challenger[stage],        
+        result: [...result, { stage, rate }]       
+      };
+    }, { result: [], total: initialTotal })
+    .result;
+
+  const sortedStages = stagesRates
+    .slice()
+    .sort((a, b) => {
+      if (b.rate === a.rate) return a.stage - b.stage;
+      return b.rate - a.rate;
+    });
+
+  return sortedStages.map(item => item.stage);
+};
+
+console.log(6, solution_6(5, [2, 1, 2, 6, 2, 4, 3, 3]));
+console.log(6, solution_6(4, [4, 4, 4, 4, 4]));
 
 // 7. 방문 길이
