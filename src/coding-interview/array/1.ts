@@ -151,7 +151,9 @@ const solution_7 = (dirs) => {
 
   return finalState.visited.size;
 };
-// 사실 encodeEdge 사용하지 않고, 배열 만들어서 0으로 초기화 하지 않고 undefined 인 경우 방문 했을 때만 초기화 해주면 메모리는 똑같긴 한데.. 귀찮음.
+// 사실 encodeEdge 사용하지 않고, 배열 만들어서 0으로 초기화 하는게 정석
+// 그리고 0으로 초기화 해서 메모리 먹는거 걱정되면 undefined 상태로 두고 방문 했을 때만 초기화 해줘도 됨.
+// 근데 난 게을러서 그냥 키-값 쌍으로 넣어서 초기화 함.
 
 console.log(solution_7('ULURRDLLU')); 
 console.log(solution_7('LULLLLLLU')); 
