@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "ESNext",
+      "outDir": "dist",
+      "strict": false, // true 엄격한 타입검사
+      "moduleDetection": "force" // 자동으로 import export 추가 => 개별 모듈로 취급
+    },
+    "ts-node": { "esm": true },
+    "include": ["src"] //src인에 있는 파일을 컴파일해라!
+  }
