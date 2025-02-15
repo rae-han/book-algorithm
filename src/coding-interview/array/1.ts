@@ -24,6 +24,40 @@ console.log(3, solution_3([2, 1, 3, 4, 1]));
 console.log(3, solution_3([5, 0, 2, 7]));
   
 // 4. 모의고사
+const patterns = [
+  [1, 2, 3, 4, 5],           // 1번 수포자의 찍기 패턴
+  [2, 1, 2, 3, 2, 4, 2, 5],   // 2번 수포자의 찍기 패턴
+  [3, 3, 1, 1, 2, 2, 4, 4, 5, 5] // 3번 수포자의 찍기 패턴
+];
+
+const solution_4_factory = (patterns) => (answers) => {
+  const initialScores = Array.from({length: patterns.length}).fill(0);
+
+  const finalScores = answers.reduce((scores, answer, i) => {
+    const remaining = answers.length - i;
+    const currentGlobalMax = Math.max(...scores);
+
+    return scores.map((score, j) =>
+      (score + remaining < currentGlobalMax)
+        ? score
+        : (answer === patterns[j][i % patterns[j].length] ? score + 1 : score)
+    );
+  }, initialScores);
+
+  const maxScore = Math.max(...finalScores);
+  
+  return finalScores.reduce((result, score, idx) =>
+    score === maxScore ? result.concat(idx + 1) : result, []
+  );
+};
+// 시간 여유가 있다면 patterns 값을 각각 무한 배열(제너레이터 이용)로 만들어서 문제를 풀 것.
+// 각 수포자를 배열로 넣어 남은 문제를 다 맞춰도 가장 높은 사람모다 못푼다면 배열에 넣지 않을 듯.
+// 근데 사실 문제에서 answers 값을 0부터 10,000 문제로 잡았기 때문에 대충 풀어도 다 됨.
+
+const solution_4 = solution_4_factory(patterns);
+
+console.log(4, solution_4([1, 2, 3, 4, 5]));
+console.log(4, solution_4([1, 3, 2, 4, 2]));
 
 // 5. 행렬의 곱셈
 
