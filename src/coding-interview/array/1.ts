@@ -91,7 +91,7 @@ const solution_6 = (N, stages) => {
   );
   const initialTotal = stages.length;
 
-  const stagesRates = [...Array(N).keys()]        
+  const stagesRates = [...Array.from({ length: N }).keys()]        
     .map(i => i + 1)                               
     .reduce(({ result, total }, stage) => {
       const rate = total > 0 ? challenger[stage] / total : 0;
@@ -104,10 +104,7 @@ const solution_6 = (N, stages) => {
 
   const sortedStages = stagesRates
     .slice()
-    .sort((a, b) => {
-      if (b.rate === a.rate) return a.stage - b.stage;
-      return b.rate - a.rate;
-    });
+    .sort((a, b) => b.rate === a.rate ? a.stage - b.stage : b.rate - a.rate);
 
   return sortedStages.map(item => item.stage);
 };
@@ -140,7 +137,9 @@ const solution_7 = (dirs) => {
     const [x, y] = state.pos;
     const nextPos = [x + dx, y + dy];
 
-    if (!isValid(nextPos)) return state;
+    if (!isValid(nextPos)) {
+      return state;
+    }
 
     const edge = encodeEdge(state.pos, nextPos);
     const newVisited = new Set(state.visited);
